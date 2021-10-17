@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
 using Types;
 
-public class ShopWindow : EditorWindow
+public class ForgeWindow : EditorWindow
 {
+    
     //background color textures
     Texture2D headerSectionTexture;
     Texture2D swordSectionTexture;
@@ -41,10 +42,10 @@ public class ShopWindow : EditorWindow
 
     float iconSize = 80;
 
-    [MenuItem("Window/Shop Designer")]
+    [MenuItem("Window/Forge Designer")]
     static void OpenWindow()
     {
-        ShopWindow window = (ShopWindow)GetWindow(typeof(ShopWindow));
+        ForgeWindow window = (ForgeWindow)GetWindow(typeof(ForgeWindow));
         window.minSize = new Vector2(600, 300);
         window.Show();
     }
@@ -97,10 +98,10 @@ public class ShopWindow : EditorWindow
         //sword start
         swordSection.x = 0;
         swordSection.y = 50;
-        swordSection.width = Screen.width/3f;
+        swordSection.width = Screen.width / 3f;
         swordSection.height = Screen.width - 50;
 
-        swordIconSection.x = (swordSection.x + swordSection.width / 2f) - iconSize/2;
+        swordIconSection.x = (swordSection.x + swordSection.width / 2f) - iconSize / 2;
         swordIconSection.y = swordSection.y + 8;
         swordIconSection.width = iconSize;
         swordIconSection.height = iconSize;
@@ -146,7 +147,7 @@ public class ShopWindow : EditorWindow
     {
         GUILayout.BeginArea(headerSection);
 
-        GUILayout.Label("Item Designer", skin.GetStyle("Header1"));
+        GUILayout.Label("Item Forge", skin.GetStyle("Header1"));
 
 
         GUILayout.EndArea();
@@ -207,6 +208,14 @@ public class ShopWindow : EditorWindow
             GeneralSettings.OpenWindow(GeneralSettings.SettingsType.GUN);
         }
 
+        GUILayout.Space(iconSize + 8);
+
+        if (GUILayout.Button("Show Shop", GUILayout.Height(30)))
+        { //in final version, it should create it and then push onto a list or array, which can then be accessed in a shop tab.
+
+            GeneralSettings.OpenWindow(GeneralSettings.SettingsType.GUN);
+        }
+
         GUILayout.EndArea();
     }
 
@@ -251,13 +260,15 @@ public class GeneralSettings : EditorWindow
     }
     static SettingsType dataSetting;
     static GeneralSettings window;
+    ShopContainer shopContainer;
+
 
     public static void OpenWindow(SettingsType setting)
     {
         dataSetting = setting;
         window = (GeneralSettings)GetWindow(typeof(GeneralSettings));
         window.minSize = new Vector2(250, 200);
-        window.Show();
+        window.Show(); 
     }
 
     void OnGUI()
@@ -265,19 +276,21 @@ public class GeneralSettings : EditorWindow
         switch (dataSetting)
         {
             case SettingsType.SWORD:
-                DrawSettings((ItemData)ShopWindow.SwordInfo);
+                DrawSettings((ItemData)ForgeWindow.SwordInfo);
                 break;
             case SettingsType.GUN:
-                DrawSettings((ItemData)ShopWindow.GunInfo);
+                DrawSettings((ItemData)ForgeWindow.GunInfo);
                 break;
             case SettingsType.POTION:
-                DrawSettings((ItemData)ShopWindow.PotionInfo);
+                DrawSettings((ItemData)ForgeWindow.PotionInfo);
                 break;
         }
     }
 
     void DrawSettings(ItemData itemData)
     {
+        shopContainer = FindObjectOfType<ShopContainer>();
+
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("Prefab");
         itemData.prefab = (GameObject)EditorGUILayout.ObjectField(itemData.prefab, typeof(GameObject), false);
@@ -356,12 +369,12 @@ public class GeneralSettings : EditorWindow
         {
             case SettingsType.SWORD:
                 //create .asset file
-                dataPath += "sword/" + ShopWindow.SwordInfo._name + ".asset";
-                AssetDatabase.CreateAsset(ShopWindow.SwordInfo, dataPath);
+                dataPath += "sword/" + ForgeWindow.SwordInfo._name + ".asset";
+                AssetDatabase.CreateAsset(ForgeWindow.SwordInfo, dataPath);
 
-                newPrefabPath += "sword/" + ShopWindow.SwordInfo._name + ".prefab";
+                newPrefabPath += "sword/" + ForgeWindow.SwordInfo._name + ".prefab";
                 //get prefab path
-                prefabPath = AssetDatabase.GetAssetPath(ShopWindow.SwordInfo.prefab);
+                prefabPath = AssetDatabase.GetAssetPath(ForgeWindow.SwordInfo.prefab);
                 AssetDatabase.CopyAsset(prefabPath, newPrefabPath);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
@@ -370,19 +383,24 @@ public class GeneralSettings : EditorWindow
                 Debug.Log(swordPrefab);
                 if (!swordPrefab.GetComponent<Sword>())
                     swordPrefab.AddComponent(typeof(Sword));
-                swordPrefab.GetComponent<Sword>().swordData = ShopWindow.SwordInfo;
-                ShopWindow.InitData();
+                swordPrefab.GetComponent<Sword>().swordData = ForgeWindow.SwordInfo;
+                shopContainer.itemObjectList.Add(swordPrefab);
+                
+
+             
+                ForgeWindow.InitData();
                 break;
 
             case SettingsType.GUN:
                 //create .asset file
-                dataPath += "gun/" + ShopWindow.GunInfo._name + ".asset";
-                AssetDatabase.CreateAsset(ShopWindow.GunInfo, dataPath);
+                dataPath += "gun/" + ForgeWindow.GunInfo._name + ".asset";
+                AssetDatabase.CreateAsset(ForgeWindow.GunInfo, dataPath);
 
-                newPrefabPath += "gun/" + ShopWindow.GunInfo._name + ".prefab";
+                newPrefabPath += "gun/" + ForgeWindow.GunInfo._name + ".prefab";
+                ShopContainer.subListPrefabs = AssetDatabase.LoadAllAssetsAtPath(newPrefabPath);
+
                 //get prefab path
-                prefabPath = AssetDatabase.GetAssetPath(ShopWindow.GunInfo.prefab);
-
+                prefabPath = AssetDatabase.GetAssetPath(ForgeWindow.GunInfo.prefab);
                 AssetDatabase.CopyAsset(prefabPath, newPrefabPath);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
@@ -390,18 +408,20 @@ public class GeneralSettings : EditorWindow
                 GameObject gunPrefab = (GameObject)AssetDatabase.LoadAssetAtPath(newPrefabPath, typeof(GameObject));
                 if (!gunPrefab.GetComponent<Gun>())
                     gunPrefab.AddComponent(typeof(Gun));
-                gunPrefab.GetComponent<Gun>().gunData = ShopWindow.GunInfo;
-                ShopWindow.InitData();
+                gunPrefab.GetComponent<Gun>().gunData = ForgeWindow.GunInfo;
+                shopContainer.itemObjectList.Add(gunPrefab);
+                ForgeWindow.InitData();
                 break;
             case SettingsType.POTION:
                 //create .asset file
-                dataPath += "potion/" + ShopWindow.PotionInfo._name + ".asset";
-                AssetDatabase.CreateAsset(ShopWindow.PotionInfo, dataPath);
+                dataPath += "potion/" + ForgeWindow.PotionInfo._name + ".asset";
+                AssetDatabase.CreateAsset(ForgeWindow.PotionInfo, dataPath);
 
-                newPrefabPath += "potion/" + ShopWindow.PotionInfo._name + ".prefab";
+                newPrefabPath += "potion/" + ForgeWindow.PotionInfo._name + ".prefab";
+                
+
                 //get prefab path
-                prefabPath = AssetDatabase.GetAssetPath(ShopWindow.PotionInfo.prefab);
-
+                prefabPath = AssetDatabase.GetAssetPath(ForgeWindow.PotionInfo.prefab);
                 AssetDatabase.CopyAsset(prefabPath, newPrefabPath);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
@@ -409,11 +429,17 @@ public class GeneralSettings : EditorWindow
                 GameObject potionPrefab = (GameObject)AssetDatabase.LoadAssetAtPath(newPrefabPath, typeof(GameObject));
                 if (!potionPrefab.GetComponent<Potion>())
                     potionPrefab.AddComponent(typeof(Potion));
-                potionPrefab.GetComponent<Potion>().potionData = ShopWindow.PotionInfo;
-                ShopWindow.InitData();
+                potionPrefab.GetComponent<Potion>().potionData = ForgeWindow.PotionInfo;
+                shopContainer.itemObjectList.Add(potionPrefab);
+                ForgeWindow.InitData();
                 break;
         }
     }
 
 
+}
+
+public class ShopSettings : EditorWindow
+{
+    
 }
