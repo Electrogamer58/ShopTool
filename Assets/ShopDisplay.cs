@@ -11,7 +11,21 @@ public class ShopDisplay : MonoBehaviour
     public Text[] textToReplace;
     public Image[] imagesToReplace;
 
-    public GameObject ScrollViewGameObject;
+    public Transform ScrollViewGameObject;
+
+    private void Awake()
+    {
+        for (int i = 0; i < itemsList.Count; i++)
+        {
+            GameObject imageObj = Instantiate(ImageObject) as GameObject;
+
+            if (ScrollViewGameObject != null)
+            {
+                imageObj.transform.SetParent(ScrollViewGameObject, false);
+
+            }
+        }
+    }
 
 
     private void Start()
@@ -20,18 +34,11 @@ public class ShopDisplay : MonoBehaviour
         //itemsList = Load All scriptableObjects
         //}
 
-        textToReplace = FindObjectsOfType<Text>();
+        textToReplace = FindObjectsOfType<Text>().Where(obj => obj.name == "Item_txt").ToArray<Text>();
         imagesToReplace = FindObjectsOfType<Image>().Where(obj => obj.name == "ItemImage").ToArray<Image>();
 
         for (int i = 0; i < itemsList.Count; i++)
         {
-            GameObject imageObj = Instantiate(ImageObject) as GameObject;
-
-            if (ScrollViewGameObject != null)
-            {
-                imageObj.transform.SetParent(ScrollViewGameObject.transform, false);
-                
-            }
 
             Debug.Log(itemsList[i]);
             Debug.Log(imagesToReplace[i]);
