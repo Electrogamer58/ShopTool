@@ -273,6 +273,7 @@ public class GeneralSettings : EditorWindow
 
     void OnGUI()
     {
+        shopContainer = FindObjectOfType<ShopContainer>();
         switch (dataSetting)
         {
             case SettingsType.SWORD:
@@ -364,6 +365,8 @@ public class GeneralSettings : EditorWindow
         string prefabPath; //path at the base prefab
         string newPrefabPath = "Assets/Prefabs/Items/";
         string dataPath = "Assets/Resources/ItemData/Data/";
+        string imagePath = "Assets/Resources/ItemData/Data/";
+        shopContainer = FindObjectOfType<ShopContainer>();
 
         switch (dataSetting)
         {
@@ -371,6 +374,8 @@ public class GeneralSettings : EditorWindow
                 //create .asset file
                 dataPath += "sword/" + ForgeWindow.SwordInfo._name + ".asset";
                 AssetDatabase.CreateAsset(ForgeWindow.SwordInfo, dataPath);
+
+                imagePath += "sword/" + ForgeWindow.SwordInfo._name + ".sprite";
 
                 newPrefabPath += "sword/" + ForgeWindow.SwordInfo._name + ".prefab";
                 //get prefab path
@@ -380,14 +385,12 @@ public class GeneralSettings : EditorWindow
                 AssetDatabase.Refresh();
 
                 GameObject swordPrefab = (GameObject)AssetDatabase.LoadAssetAtPath(newPrefabPath, typeof(GameObject));
-                Debug.Log(swordPrefab);
+                Sprite swordSprite = (Sprite)AssetDatabase.LoadAssetAtPath(imagePath, typeof(Sprite));
                 if (!swordPrefab.GetComponent<Sword>())
                     swordPrefab.AddComponent(typeof(Sword));
                 swordPrefab.GetComponent<Sword>().swordData = ForgeWindow.SwordInfo;
                 shopContainer.itemObjectList.Add(swordPrefab);
-                
-
-             
+                shopContainer.itemSpriteList.Add(swordSprite);
                 ForgeWindow.InitData();
                 break;
 
@@ -395,6 +398,8 @@ public class GeneralSettings : EditorWindow
                 //create .asset file
                 dataPath += "gun/" + ForgeWindow.GunInfo._name + ".asset";
                 AssetDatabase.CreateAsset(ForgeWindow.GunInfo, dataPath);
+
+                imagePath += "gun/" + ForgeWindow.GunInfo._name + ".sprite";
 
                 newPrefabPath += "gun/" + ForgeWindow.GunInfo._name + ".prefab";
                 ShopContainer.subListPrefabs = AssetDatabase.LoadAllAssetsAtPath(newPrefabPath);
@@ -406,16 +411,20 @@ public class GeneralSettings : EditorWindow
                 AssetDatabase.Refresh();
 
                 GameObject gunPrefab = (GameObject)AssetDatabase.LoadAssetAtPath(newPrefabPath, typeof(GameObject));
+                Sprite gunSprite = (Sprite)AssetDatabase.LoadAssetAtPath(imagePath, typeof(Sprite));
                 if (!gunPrefab.GetComponent<Gun>())
                     gunPrefab.AddComponent(typeof(Gun));
                 gunPrefab.GetComponent<Gun>().gunData = ForgeWindow.GunInfo;
                 shopContainer.itemObjectList.Add(gunPrefab);
+                shopContainer.itemSpriteList.Add(gunSprite);
                 ForgeWindow.InitData();
                 break;
             case SettingsType.POTION:
                 //create .asset file
                 dataPath += "potion/" + ForgeWindow.PotionInfo._name + ".asset";
                 AssetDatabase.CreateAsset(ForgeWindow.PotionInfo, dataPath);
+
+                imagePath += "potion/" + ForgeWindow.PotionInfo._name + ".sprite";
 
                 newPrefabPath += "potion/" + ForgeWindow.PotionInfo._name + ".prefab";
                 
@@ -427,10 +436,12 @@ public class GeneralSettings : EditorWindow
                 AssetDatabase.Refresh();
 
                 GameObject potionPrefab = (GameObject)AssetDatabase.LoadAssetAtPath(newPrefabPath, typeof(GameObject));
+                Sprite potionSprite = (Sprite)AssetDatabase.LoadAssetAtPath(imagePath, typeof(Sprite));
                 if (!potionPrefab.GetComponent<Potion>())
                     potionPrefab.AddComponent(typeof(Potion));
                 potionPrefab.GetComponent<Potion>().potionData = ForgeWindow.PotionInfo;
                 shopContainer.itemObjectList.Add(potionPrefab);
+                shopContainer.itemSpriteList.Add(potionSprite);
                 ForgeWindow.InitData();
                 break;
         }
@@ -441,5 +452,6 @@ public class GeneralSettings : EditorWindow
 
 public class ShopSettings : EditorWindow
 {
-    
+    //EditorGUILayout.BeginHorizontal();
+    //itemData.autoPopulate = EditorGUILayout.Toggle("Item is Breakable", itemData.canBreak);
 }

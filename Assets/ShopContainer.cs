@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class ShopContainer : MonoBehaviour
 {
+    [SerializeField] private GameObject ImageObject;
+
     public List<ScriptableObject> itemList = new List<ScriptableObject>();
     public List<GameObject> itemObjectList = new List<GameObject>();
+    public List<Sprite> itemSpriteList = new List<Sprite>();
     public static int numSpawned = 0;
     public static Object[] subListPrefabs;
     private Vector3 startPosition;
@@ -22,13 +26,21 @@ public class ShopContainer : MonoBehaviour
             
             Debug.Log(lo);
 
-            
-
         }
 
-        foreach (var item in itemObjectList)
+        foreach (GameObject item in itemObjectList)
         {
+            //GameObject shopItem = Instantiate(item, item.transform.parent, false) as GameObject;
+
             Debug.Log(item.ToString());
+        }
+
+        foreach (Sprite image in itemSpriteList)
+        {
+            //Sprite spriteImage = itemSpriteList;
+            //GameObject imageObj = Instantiate(ImageObject, ImageObject.transform.parent, false);
+            //imageObj.GetComponent<Image>().sprite = image;
+            Debug.Log(image.ToString());
         }
 
         // Concatenate all items into a single string
