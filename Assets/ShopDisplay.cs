@@ -8,40 +8,38 @@ public class ShopDisplay : MonoBehaviour
 {
     [SerializeField] private GameObject ImageObject;
     [SerializeField] private RectTransform ScrollPanel;
+    [SerializeField] private Transform Viewport;
     public List<ItemData> itemsList = new List<ItemData>();
     public Text[] textToReplace;
     public Image[] imagesToReplace;
 
     public ShopCell[,] Grid;
 
-    public Transform ScrollViewGameObject;
-
     private void Awake()
     {
         Utils.Vertical = Mathf.FloorToInt(ScrollPanel.sizeDelta.y);
         Utils.Horizontal = Mathf.FloorToInt(ScrollPanel.sizeDelta.x);
-        Utils.Columns = Utils.Horizontal * 2;
-        Utils.Rows = Utils.Vertical * 2;
+        Utils.Columns = Mathf.Min(4, itemsList.Count);
+        Utils.Rows = Mathf.Min(4, itemsList.Count);
         Grid = new ShopCell[Utils.Columns, Utils.Rows];
 
-        Debug.Log(Utils.Columns);
+        Debug.Log(Utils.Rows);
 
         for (int i = 0; i < Utils.Columns; i++)
         {
+            //Debug.Log("Epic");
             for (int j = 0; j < Utils.Rows; j++)
             {
 
                 //GameObject imageObj = Instantiate(ImageObject) as GameObject;
                 //GameObject imageObj = Instantiate(ImageObject, Utils.GridToWorldPosition(i, j), Quaternion.identity);
-                Debug.Log("Epic");
-                if (ScrollViewGameObject != null)
-                {
-                    Grid[i, j] = new ShopCell(ImageObject, i, j);
+
+                Grid[i, j] = new ShopCell(ImageObject, Utils.Horizontal/2 + (i*300), Utils.Vertical/2* j );
 
 
-                    //imageObj.transform.SetParent(ScrollViewGameObject, false);
+                Grid[i,j].gameObject.transform.SetParent(Viewport.transform, false);
 
-                }
+
 
             }
         }

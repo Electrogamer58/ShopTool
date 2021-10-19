@@ -824,7 +824,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 628620635}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.75203764
+  m_Size: 0.9999904
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1037,6 +1037,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ImageObject: {fileID: 6997340199631787247, guid: ed0752d6068beb24caa957ec70d0e92e,
     type: 3}
+  ScrollPanel: {fileID: 290770225}
   itemsList:
   - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
   - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
@@ -1097,7 +1098,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000024167104, y: 0.0018299689}
+  m_AnchoredPosition: {x: -0.000024167104, y: -0.000032487886}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1983854109

@@ -28,20 +28,20 @@ public class ShopContainer : MonoBehaviour
 
         }
 
-        foreach (GameObject item in itemObjectList)
-        {
-            //GameObject shopItem = Instantiate(item, item.transform.parent, false) as GameObject;
+        //foreach (GameObject item in itemObjectList)
+        //{
+        //    //GameObject shopItem = Instantiate(item, item.transform.parent, false) as GameObject;
+        //
+        //    Debug.Log(item.ToString());
+        //}
 
-            Debug.Log(item.ToString());
-        }
-
-        foreach (Sprite image in itemSpriteList)
-        {
-            //Sprite spriteImage = itemSpriteList;
-            //GameObject imageObj = Instantiate(ImageObject, ImageObject.transform.parent, false);
-            //imageObj.GetComponent<Image>().sprite = image;
-            Debug.Log(image.ToString());
-        }
+        //foreach (Sprite image in itemSpriteList)
+        //{
+        //    //Sprite spriteImage = itemSpriteList;
+        //    //GameObject imageObj = Instantiate(ImageObject, ImageObject.transform.parent, false);
+        //    //imageObj.GetComponent<Image>().sprite = image;
+        //    Debug.Log(image.ToString());
+        //}
 
         // Concatenate all items into a single string
         // NOTE:  If the List is long, this would be more efficient with a
