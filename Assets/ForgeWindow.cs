@@ -35,10 +35,12 @@ public class ForgeWindow : EditorWindow
     static SwordData swData;
     static GunData gunData;
     static PotionData potData;
+    static ShopData shopData;
 
     public static SwordData SwordInfo { get { return swData; } }
     public static GunData GunInfo { get { return gunData; } }
     public static PotionData PotionInfo { get { return potData; } }
+    public static ShopData ShopInfo { get { return shopData; } }
 
     float iconSize = 80;
 
@@ -62,6 +64,7 @@ public class ForgeWindow : EditorWindow
         swData = (SwordData)ScriptableObject.CreateInstance(typeof(SwordData));
         gunData = (GunData)ScriptableObject.CreateInstance(typeof(GunData));
         potData = (PotionData)ScriptableObject.CreateInstance(typeof(PotionData));
+        shopData = (ShopData)ScriptableObject.CreateInstance(typeof(ShopData));
     }
 
     void InitTextures() //initialize 2D textures
@@ -208,12 +211,12 @@ public class ForgeWindow : EditorWindow
             GeneralSettings.OpenWindow(GeneralSettings.SettingsType.GUN);
         }
 
-        GUILayout.Space(iconSize + 8);
+        GUILayout.Space(8);
 
         if (GUILayout.Button("Show Shop", GUILayout.Height(30)))
         { //in final version, it should create it and then push onto a list or array, which can then be accessed in a shop tab.
 
-            GeneralSettings.OpenWindow(GeneralSettings.SettingsType.GUN);
+            GeneralSettings.OpenWindow(GeneralSettings.SettingsType.SHOP);
         }
 
         GUILayout.EndArea();
@@ -256,7 +259,8 @@ public class GeneralSettings : EditorWindow
     {
         SWORD,
         GUN,
-        POTION
+        POTION,
+        SHOP
     }
     static SettingsType dataSetting;
     static GeneralSettings window;
@@ -284,6 +288,9 @@ public class GeneralSettings : EditorWindow
                 break;
             case SettingsType.POTION:
                 DrawSettings((ItemData)ForgeWindow.PotionInfo);
+                break;
+            case SettingsType.SHOP:
+                DrawShopSettings((ShopData)ForgeWindow.ShopInfo);
                 break;
         }
     }
@@ -350,6 +357,37 @@ public class GeneralSettings : EditorWindow
         else if (itemData._name == null || itemData._name.Length < 1)
         {
             EditorGUILayout.HelpBox("This item needs a [Name] to show up on the Shop.", MessageType.Warning);
+        }
+
+        else if (GUILayout.Button("Finish and Save", GUILayout.Height(30)))
+        {
+            SaveItemData();
+            window.Close();
+        }
+
+    }
+
+    void DrawShopSettings(ShopData shopData)
+    {
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Shop Name");
+        shopData.Name = EditorGUILayout.TextField(shopData.Name);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Sprite/Image");
+        shopData.backgroundSprite = (Sprite)EditorGUILayout.ObjectField(shopData.backgroundSprite, typeof(Sprite), false);
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Color");
+        shopData.color = EditorGUILayout.ColorField(shopData.color);
+        EditorGUILayout.EndHorizontal();
+
+        if (shopData.Name == null)
+        {
+            EditorGUILayout.HelpBox("This shop needs a name!", MessageType.Warning);
         }
 
         else if (GUILayout.Button("Finish and Save", GUILayout.Height(30)))
@@ -435,23 +473,31 @@ public class GeneralSettings : EditorWindow
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
 
-                GameObject potionPrefab = (GameObject)AssetDatabase.LoadAssetAtPath(newPrefabPath, typeof(GameObject));
+                GameObject potionPrefab = (GameObject)AssetDatabase.LoadAssetAtPath(newPrefabPath, typeof(GameObject)); //create new gameObject prefab
                 Sprite potionSprite = (Sprite)AssetDatabase.LoadAssetAtPath(imagePath, typeof(Sprite));
-                if (!potionPrefab.GetComponent<Potion>())
+                if (!potionPrefab.GetComponent<Potion>()) //make sure it has a scriptable object attached
                     potionPrefab.AddComponent(typeof(Potion));
                 potionPrefab.GetComponent<Potion>().potionData = ForgeWindow.PotionInfo;
                 shopContainer.itemObjectList.Add(potionPrefab);
                 shopContainer.itemSpriteList.Add(potionSprite);
                 ForgeWindow.InitData();
                 break;
+            case SettingsType.SHOP:
+                dataPath += "Shops/" + ForgeWindow.ShopInfo.Name + ".asset";
+                AssetDatabase.CreateAsset(ForgeWindow.ShopInfo, dataPath);
+
+                newPrefabPath += "Shops/" + ForgeWindow.ShopInfo.Name + ".prefab";
+
+                GameObject ShopPrefab = (GameObject)AssetDatabase.LoadAssetAtPath(newPrefabPath, typeof(GameObject));
+                if (!ShopPrefab.GetComponent<ShopDisplay>())
+                    ShopPrefab.AddComponent(typeof(ShopDisplay));
+                ShopPrefab.GetComponent<ShopDisplay>().shopData = ForgeWindow.ShopInfo;
+                ForgeWindow.InitData();
+
+                break;
+
         }
     }
 
 
-}
-
-public class ShopSettings : EditorWindow
-{
-    //EditorGUILayout.BeginHorizontal();
-    //itemData.autoPopulate = EditorGUILayout.Toggle("Item is Breakable", itemData.canBreak);
 }

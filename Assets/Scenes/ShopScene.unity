@@ -211,7 +211,6 @@ GameObject:
   - component: {fileID: 290770228}
   - component: {fileID: 290770227}
   - component: {fileID: 290770226}
-  - component: {fileID: 290770229}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -233,7 +232,7 @@ RectTransform:
   - {fileID: 1035479663}
   - {fileID: 1167013608}
   m_Father: {fileID: 1336354196}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -259,7 +258,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 50
   m_Viewport: {fileID: 1035479663}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1167013609}
@@ -307,23 +306,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290770224}
   m_CullTransparentMesh: 0
---- !u!114 &290770229
-MonoBehaviour:
+--- !u!1 &400571425
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 290770224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc7c5410b3f431e4fa4ea56022790a42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ImageObject: {fileID: 0}
-  itemList: []
-  itemObjectList:
-  - {fileID: 528837438184184789, guid: 326b868d09ce0704485dccbd9c39994d, type: 3}
-  itemSpriteList: []
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 400571426}
+  m_Layer: 5
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &400571426
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400571425}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1336354196}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -53, y: 317}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 1}
 --- !u!1 &472163743
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,7 +841,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 628620635}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.625
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -955,7 +972,6 @@ GameObject:
   - component: {fileID: 1336354196}
   - component: {fileID: 1336354198}
   - component: {fileID: 1336354197}
-  - component: {fileID: 1336354200}
   - component: {fileID: 1336354199}
   m_Layer: 5
   m_Name: ShopPanel
@@ -977,6 +993,7 @@ RectTransform:
   m_Children:
   - {fileID: 1224603791}
   - {fileID: 16092262}
+  - {fileID: 400571426}
   - {fileID: 290770225}
   m_Father: {fileID: 901668452}
   m_RootOrder: 0
@@ -1035,12 +1052,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffd76ee9fb55a84789a5a1a10bb861d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopData: {fileID: 0}
   ImageObject: {fileID: 6997340199631787247, guid: ed0752d6068beb24caa957ec70d0e92e,
     type: 3}
   ScrollPanel: {fileID: 290770225}
   ContentPanel: {fileID: 1702854422}
+  SpawnPoint: {fileID: 400571426}
   WhereToPlaceItems: {fileID: 1702854422}
   itemsList:
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
+  - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
   - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
   - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
   - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
@@ -1059,27 +1123,6 @@ MonoBehaviour:
   textToReplace: []
   imagesToReplace: []
   tileSize: 300
---- !u!114 &1336354200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336354195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc7c5410b3f431e4fa4ea56022790a42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ImageObject: {fileID: 6997340199631787247, guid: ed0752d6068beb24caa957ec70d0e92e,
-    type: 3}
-  itemList: []
-  itemObjectList:
-  - {fileID: 528837438184184789, guid: 3e62b7b1b1d6d7f4fa6a557a23631782, type: 3}
-  - {fileID: 528837438184184789, guid: 3e62b7b1b1d6d7f4fa6a557a23631782, type: 3}
-  itemSpriteList:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1702854421
 GameObject:
   m_ObjectHideFlags: 0
