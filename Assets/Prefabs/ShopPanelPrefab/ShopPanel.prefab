@@ -605,7 +605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffd76ee9fb55a84789a5a1a10bb861d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopData: {fileID: 11400000, guid: 2e07068c2a5ebcd40ab6990b3b3be575, type: 2}
+  shopData: {fileID: 0}
   ScrollPanel: {fileID: 4086761304186601201}
   ContentPanel: {fileID: 4086761302912994518}
   SpawnPoint: {fileID: 4086761304280158178}
@@ -631,7 +631,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
   - {fileID: 11400000, guid: 1a1870445c9c04847991e92b01e62440, type: 2}
   tileSize: 300
-  ItemToBuy: 
+  ImageObject: {fileID: 6997340199631787247, guid: ed0752d6068beb24caa957ec70d0e92e,
+    type: 3}
+  ItemName: 
+  ItemCost: 0
 --- !u!1 &4086761303434151207
 GameObject:
   m_ObjectHideFlags: 0

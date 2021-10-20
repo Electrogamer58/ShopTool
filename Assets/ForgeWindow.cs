@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using Types;
 
+#if UNITY_EDITOR
 public class ForgeWindow : EditorWindow
 {
     
@@ -507,3 +508,4 @@ public class GeneralSettings : EditorWindow
 
 
 }
+#endif

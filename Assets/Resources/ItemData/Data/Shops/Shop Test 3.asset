@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 455a5401460cd6c47b2c185de3bf50df, type: 3}
   m_Name: Shop Test 3
   m_EditorClassIdentifier: 
-  Name: Shop Test 3
+  Name: Hamster's Shop
   backgroundSprite: {fileID: 0}
   color: {r: 0, g: 0.48235294, b: 1, a: 0.7019608}

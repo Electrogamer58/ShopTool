@@ -18,7 +18,7 @@ public class ShopDisplay : MonoBehaviour
     private Text[] textToReplace;
     private Image[] imagesToReplace;
     private Text[] itemCosts;
-    private GameObject ImageObject;
+    public GameObject ImageObject;
 
     [HideInInspector]
     public string ItemName;
@@ -52,7 +52,7 @@ public class ShopDisplay : MonoBehaviour
         shopImage.color = shopData.color;
         shopImage.sprite = shopData.backgroundSprite;
 
-        ImageObject = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Item_obj.prefab", typeof(GameObject));
+        //ImageObject = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Item_obj.prefab", typeof(GameObject));
         
 
         newPosY = SpawnPoint.transform.position.y;

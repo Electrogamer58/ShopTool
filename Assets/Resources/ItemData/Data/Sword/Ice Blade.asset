@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c65eff0af0ecb2448175ccb8345bc43, type: 3}
+  m_Name: Ice Blade
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 528837438184184789, guid: 8d351ead0be1b6448898b7ed41f78ebc, type: 3}
+  visualSprite: {fileID: 21300000, guid: c37eb4198ce772346aa0ff6c668b2902, type: 3}
+  price: 10
+  canBreak: 1
+  maxHealth: 6
+  maxCharge: 2
+  critChance: 27.8
+  power: 23.5
+  _name: Ice Blade
+  dmgType: 1
+  wpnType: 2
