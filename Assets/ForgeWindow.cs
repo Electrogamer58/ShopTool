@@ -312,7 +312,7 @@ public class GeneralSettings : EditorWindow
 
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("Price in Shops");
-        itemData.price = EditorGUILayout.FloatField(itemData.price);
+        itemData.price = EditorGUILayout.IntField(itemData.price);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
@@ -487,6 +487,12 @@ public class GeneralSettings : EditorWindow
                 AssetDatabase.CreateAsset(ForgeWindow.ShopInfo, dataPath);
 
                 newPrefabPath += "Shops/" + ForgeWindow.ShopInfo.Name + ".prefab";
+
+                //get prefab path
+                prefabPath = "Assets/Prefabs/ShopPanelPrefab/ShopPanel.prefab";
+                AssetDatabase.CopyAsset(prefabPath, newPrefabPath);
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
 
                 GameObject ShopPrefab = (GameObject)AssetDatabase.LoadAssetAtPath(newPrefabPath, typeof(GameObject));
                 if (!ShopPrefab.GetComponent<ShopDisplay>())

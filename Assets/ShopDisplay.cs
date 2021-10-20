@@ -3,29 +3,58 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class ShopDisplay : MonoBehaviour
 {
     public ShopData shopData;
-    [SerializeField] private GameObject ImageObject;
+    
     [SerializeField] private RectTransform ScrollPanel;
     [SerializeField] private RectTransform ContentPanel;
     [SerializeField] private RectTransform SpawnPoint;
-    [SerializeField] private Transform WhereToPlaceItems;
     public List<ItemData> itemsList = new List<ItemData>();
-    public Text[] textToReplace;
-    public Image[] imagesToReplace;
     public int tileSize = 5;
 
+    private Text[] textToReplace;
+    private Image[] imagesToReplace;
+    private Text[] itemCosts;
+    private GameObject ImageObject;
+
+    [HideInInspector]
+    public string ItemName;
+    [HideInInspector]
+    public int ItemCost;
+    //public string ItemDesc;
+
     private float newPosY;
+    //public int myId;
+
+    //Shop Visuals
+    private Text shopText;
+    private Image shopImage;
+
 
     public ShopCell[,] Grid;
 
     private void Awake()
     {
-        //if (autoPopulate){
-        //itemsList = Load All scriptableObjects
+        //if (shopData.autoPopulate){
+        //itemsList = Load All Prefabs
         //}
+
+        shopText = gameObject.transform.Find("Shop_txt").GetComponent<Text>();
+        shopImage = GetComponent<Image>();
+
+        if (shopText != null)
+        {
+            shopText.text = shopData.Name;
+        }
+        shopImage.color = shopData.color;
+        shopImage.sprite = shopData.backgroundSprite;
+
+        ImageObject = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Item_obj.prefab", typeof(GameObject));
+        
+
         newPosY = SpawnPoint.transform.position.y;
         int drawCount = itemsList.Count;
         
@@ -46,12 +75,13 @@ public class ShopDisplay : MonoBehaviour
                 
                 float posX = j * tileSize - 100;
                 float posY = i * -tileSize + (95 * Utils.Rows);
-                Grid[i, j] = new ShopCell(ImageObject, 1, (int)newPosY );
-                Grid[i,j].gameObject.transform.SetParent(WhereToPlaceItems.transform, false);
+                Grid[i, j] = new ShopCell(ImageObject, 1, (int)newPosY);
+                
+                Grid[i,j].gameObject.transform.SetParent(ContentPanel.transform, false);
 
                 Grid[i, j].gameObject.transform.position = new Vector2(posX, newPosY);
 
-
+                
 
             }
         }
@@ -67,15 +97,25 @@ public class ShopDisplay : MonoBehaviour
 
         textToReplace = FindObjectsOfType<Text>().Where(obj => obj.name == "Item_txt").ToArray<Text>();
         imagesToReplace = FindObjectsOfType<Image>().Where(obj => obj.name == "ItemImage").ToArray<Image>();
+        itemCosts = FindObjectsOfType<Text>().Where(obj => obj.name == "Cost_txt").ToArray<Text>();
 
-         for (int i = 0; i < itemsList.Count; i++)
+        for (int i = 0; i < itemsList.Count; i++)
         {
 
             textToReplace[i].text = itemsList[i]._name;
             imagesToReplace[i].sprite = itemsList[i].visualSprite;
+            itemCosts[i].text = itemsList[i].price.ToString();
+
+            ItemName = itemsList[i]._name;
+            ItemCost = itemsList[i].price;
         }
         
 
+    }
+
+    public void Purchase()
+    {
+        Debug.Log("Purchased " + ItemName);
     }
 
 }

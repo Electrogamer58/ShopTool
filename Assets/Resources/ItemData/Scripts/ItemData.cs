@@ -6,7 +6,7 @@ public class ItemData : ScriptableObject
 {
     public GameObject prefab;
     public Sprite visualSprite;
-    public float price; //how expensive it is
+    public int price; //how expensive it is
     public bool canBreak;
     public float maxHealth; //how much health it has if it can break
     public float maxCharge; //cooldown charge
